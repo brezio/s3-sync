@@ -6,12 +6,17 @@ RUN yum -y update && \
 
 WORKDIR /app
 
-COPY s3-sync.cron.tmpl .
-COPY entrypoint.sh .
-COPY sync.sh .
+RUN addgroup --system --gid 1001 s3-sync
+RUN adduser --system --uid 1001 s3-sync
+
+COPY --chown=s3-sync:s3-sync s3-sync.cron.tmpl .
+COPY --chown=s3-sync:s3-sync entrypoint.sh .
+COPY --chown=s3-sync:s3-sync sync.sh .
 
 RUN chmod +x ./entrypoint.sh
 RUN chmod +x ./sync.sh
+
+USER s3-sync:s3-sync
 
 ENTRYPOINT ["./entrypoint.sh"]
 CMD ["crond", "-n"]
