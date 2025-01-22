@@ -1,21 +1,15 @@
 #!/bin/sh
 set -e
 
-echo "Updating cron schedule to $CRON_SCHEDULE"
-
-printenv | grep -v "no_proxy" >> /etc/environment
-
 # Set a default schedule, if the user didn't provide one
 if [ -z "$CRON_SCHEDULE" ]; then
-  export CRON_SCHEDULE='*/2 * * * *'
+  export CRON_SCHEDULE='*/1 * * * *'
 fi
 
-if [ -z "$SOURCE_DIR" ]; then
-  export SOURCE_DIR='/source'
-fi
+echo "Updating cron schedule to $CRON_SCHEDULE"
 
-# Run substitutions on the template file and inject the crontab
-envsubst < /app/s3-sync.cron.tmpl | crontab
+# Run substitutions on the template file
+envsubst < /app/crontab > /app/crontab.live
 
 # Run the main container command
 exec "$@"
