@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-echo "Starting cron..."
+echo "Updating cron schedule to $CRON_SCHEDULE"
 
 printenv | grep -v "no_proxy" >> /etc/environment
 

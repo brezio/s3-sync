@@ -8,8 +8,10 @@ WORKDIR /app
 
 COPY s3-sync.cron.tmpl .
 COPY entrypoint.sh .
+COPY sync.sh .
 
 RUN chmod +x ./entrypoint.sh
+RUN chmod +x ./sync.sh
 
 ENTRYPOINT ["./entrypoint.sh"]
 CMD ["crond", "-n"]
