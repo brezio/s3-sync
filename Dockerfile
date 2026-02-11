@@ -1,11 +1,11 @@
 FROM amazon/aws-cli:latest AS base
 
 FROM base AS base-amd64
-ENV SUPERCRONIC_SHA1SUM=71b0d58cc53f6bd72cf2f293e09e294b79c666d8
+ENV SUPERCRONIC_SHA1SUM=b444932b81583b7860849f59fdb921217572ece2
 FROM base AS base-arm64
-ENV SUPERCRONIC_SHA1SUM=e0f0c06ebc5627e43b25475711e694450489ab00
+ENV SUPERCRONIC_SHA1SUM=5193ea5292dda3ad949d0623e178e420c26bfad2
 FROM base AS base-arm
-ENV SUPERCRONIC_SHA1SUM=0d3e3da1eeceaa34991d44b48aecfcbb9d9fba5a
+ENV SUPERCRONIC_SHA1SUM=ef1c11d72eca0f5b63e237b93073c3b7986956a5
 
 ARG TARGETARCH
 FROM base-$TARGETARCH AS app
@@ -14,7 +14,7 @@ RUN yum -y update && \
   yum -y install systemd cronie tar gzip git gettext wget
 
 ARG TARGETARCH
-ENV SUPERCRONIC_URL=https://github.com/aptible/supercronic/releases/download/v0.2.33/supercronic-linux-${TARGETARCH} \
+ENV SUPERCRONIC_URL=https://github.com/aptible/supercronic/releases/download/v0.2.42/supercronic-linux-${TARGETARCH} \
   SUPERCRONIC=supercronic-linux-${TARGETARCH}
 RUN wget "$SUPERCRONIC_URL" \
   && echo "${SUPERCRONIC_SHA1SUM}  ${SUPERCRONIC}" | sha1sum -c - \
