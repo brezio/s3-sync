@@ -6,6 +6,9 @@ if [ -z "$CRON_SCHEDULE" ]; then
   export CRON_SCHEDULE='*/2 * * * *'
 fi
 
+if [ -z "$SYNC_CMD" ]; then
+  export SYNC_CMD='sync'
+fi
 
 if [ -z "$SYNC_OPTIONS" ]; then
   export SYNC_OPTIONS='--no-progress'

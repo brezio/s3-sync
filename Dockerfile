@@ -38,6 +38,7 @@ RUN chmod +x entrypoint.sh
 USER 1001:1001
 
 ENV SOURCE_DIR=/app/source
+ENV SYNC_CMD=sync
 
 ENTRYPOINT ["sh", "entrypoint.sh"]
 
