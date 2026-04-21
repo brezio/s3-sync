@@ -7,11 +7,11 @@ if [ -z "$CRON_SCHEDULE" ]; then
 fi
 
 if [ -z "$SYNC_CMD" ]; then
-  export SYNC_CMD='sync'
+  export SYNC_CMD='move'
 fi
 
 if [ -z "$SYNC_OPTIONS" ]; then
-  export SYNC_OPTIONS='--no-progress'
+  export SYNC_OPTIONS='--checksum --delete-empty-src-dirs --retries 10 --low-level-retries 20'
 fi
 
 echo "Updating cron schedule to $CRON_SCHEDULE"

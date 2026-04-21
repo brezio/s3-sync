@@ -1,4 +1,4 @@
-FROM amazon/aws-cli:latest AS base
+FROM rclone/rclone:latest AS base
 
 FROM base AS base-amd64
 ENV SUPERCRONIC_SHA1SUM=b444932b81583b7860849f59fdb921217572ece2
@@ -10,8 +10,7 @@ ENV SUPERCRONIC_SHA1SUM=ef1c11d72eca0f5b63e237b93073c3b7986956a5
 ARG TARGETARCH
 FROM base-$TARGETARCH AS app
 
-RUN yum -y update && \
-  yum -y install systemd cronie tar gzip git gettext wget
+RUN apk add --no-cache gettext wget
 
 ARG TARGETARCH
 ENV SUPERCRONIC_URL=https://github.com/aptible/supercronic/releases/download/v0.2.42/supercronic-linux-${TARGETARCH} \
@@ -30,15 +29,12 @@ COPY entrypoint.sh entrypoint.sh
 RUN touch /app/crontab.live
 RUN chown -R 1001:1001 /app/crontab.live
 
-RUN mkdir /app/locks
-RUN chown -R 1001:1001 /app/locks
-
 RUN chmod +x entrypoint.sh
 
 USER 1001:1001
 
 ENV SOURCE_DIR=/app/source
-ENV SYNC_CMD=sync
+ENV SYNC_CMD=move
 
 ENTRYPOINT ["sh", "entrypoint.sh"]
 

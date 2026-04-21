@@ -1,1 +1,1 @@
-${CRON_SCHEDULE} /usr/local/bin/aws s3 ${SYNC_CMD} ${SYNC_OPTIONS} ${SOURCE_DIR} ${DEST_DIR}
+${CRON_SCHEDULE} /usr/local/bin/rclone ${SYNC_CMD} ${SYNC_OPTIONS} ${SOURCE_DIR} ${DEST_DIR}
